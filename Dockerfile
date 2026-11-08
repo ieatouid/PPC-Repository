@@ -13,4 +13,4 @@ COPY . /app
 RUN chmod +x /app/.github/scripts/entrypoint.sh && \
     chmod +x /app/.github/scripts/update_readme.sh
 
-ENTRYPOINT ["/app/.github/scripts/entrypoint.sh"]
+ENTRYPOINT ["/bin/bash", "/app/.github/scripts/entrypoint.sh"]
