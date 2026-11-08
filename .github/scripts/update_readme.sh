@@ -10,6 +10,7 @@ echo -e "\n### Vowel Frequency Update\nContributor: $GITHUB_USER\nResults: $FREQ
 
 git config --global user.name "github-actions"
 git config --global user.email "github-actions@users.noreply.github.com"
+git config --global --add safe.directory /app
 
 git add README.md
 git commit -m "Update README with vowel frequency results" || echo "No changes to commit"
