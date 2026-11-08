@@ -16,4 +16,10 @@ git add README.md
 git commit -m "Update README with vowel frequency results" || echo "No changes to commit"
 
 git remote set-url origin "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+
+git fetch origin main
+
+git rebase origin/main
+
 git push origin HEAD:main
+
