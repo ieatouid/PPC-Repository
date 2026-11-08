@@ -1,6 +1,10 @@
 
 name: CI Workflow
 
+concurrency:
+  group: vowel-frequency-main
+  cancel-in-progress: false
+  
 on:
   push:
     branches:
