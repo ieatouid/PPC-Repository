@@ -1,12 +1,21 @@
 
 #!/bin/bash
 
+# Stop if an error occurs
 set -e
+set -o pipefail
 
-echo "Starting Frequency Analyzer..."
+echo "Starting Task Manager..."
 
-FREQ_RESULT=$(python3 /app/.github/scripts/frequency.py /app/${FILE:-data.txt})
+# Run the task management application
+python3 /app/.github/scripts/todo.py | tee /app/task-output.txt
 
-bash /app/.github/scripts/update_readme.sh "$FREQ_RESULT" "$GITHUB_USER"
+# Run the unit tests
+python3 /app/.github/scripts/todo-test.py | tee /app/test-output.txt
 
-echo "Process Completed!"
+# Update the HTML file
+bash /app/.github/scripts/update_index.sh \
+    /app/task-output.txt \
+    /app/test-output.txt
+
+echo "Task Manager Process Completed!"
