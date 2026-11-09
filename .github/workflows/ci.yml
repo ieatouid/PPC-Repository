@@ -1,37 +1,35 @@
 
-name: CI Workflow
+name: CI Workflow - Docker
 
-concurrency:
-  group: vowel-frequency-main
-  cancel-in-progress: false
-  
 on:
   push:
     branches:
       - main
-    paths:
-      - 'data.txt'
+    paths-ignore:
+      - 'index.html'
 
 permissions:
   contents: write
+
+concurrency:
+  group: task-manager-main
+  cancel-in-progress: false
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
+      # Checkout repository
       - name: Checkout Repository
         uses: actions/checkout@v4
 
+      # Build Docker image
       - name: Build Docker Image
         run: |
-          docker build -t vowel-frequency-analyzer:latest .
-          
-      - name: Set Script Permissions
-        run: |
-          chmod +x .github/scripts/entrypoint.sh
-          chmod +x .github/scripts/update_readme.sh
-          
+          docker build -t task-manager:latest .
+
+      # Run Docker container
       - name: Run Docker Container
         run: |
           docker run --rm \
@@ -39,6 +37,4 @@ jobs:
             -e GITHUB_TOKEN="${{ secrets.GITHUB_TOKEN }}" \
             -e GITHUB_REPOSITORY="${{ github.repository }}" \
             -v "${{ github.workspace }}:/app" \
-            vowel-frequency-analyzer:latest
-
-            
+            task-manager:latest
